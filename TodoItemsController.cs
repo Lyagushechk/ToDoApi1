@@ -85,6 +85,14 @@ namespace ToDoApi1.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
+            _context.TodoItems.Add(todoItem);
+            await _context.SaveChangesAsync();
+
+            //    return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+        }
+        /*public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        {
           if (_context.TodoItems == null)
           {
               return Problem("Entity set 'TodoContext.TodoItems'  is null.");
@@ -93,7 +101,7 @@ namespace ToDoApi1.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-        }
+        }*/
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
